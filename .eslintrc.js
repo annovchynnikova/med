@@ -15,4 +15,6 @@ module.exports = {
   plugins: [],
   // add your custom rules here
   rules: {},
+
+  ignorePatterns: ['firebase.js'],
 }
