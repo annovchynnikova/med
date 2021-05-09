@@ -1,0 +1,55 @@
+
+
+.container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 100%;
+  margin: auto;
+  padding: 32px 0 16px;
+  text-align: center;
+  height: 100%;
+
+  &_fluid {
+    height: 100%;
+    padding: 0;
+    max-width: none;
+  }
+}
+
+.buttons {
+  width: 100%;
+  margin-top: auto;
+  padding-top: 24px;
+}
+
+.custom-scrollbar {
+  overflow-y: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  @media screen and (min-width: 768px) {
+    padding-right: 5px;
+    margin-right: -12px;
+    cursor: pointer;
+  }
+
+  &::-webkit-scrollbar {
+    width: 0;
+    display: none;
+    @media screen and (min-width: 768px) {
+      width: 7px;
+      display: block;
+    }
+  }
+
+  &::-webkit-scrollbar-thumb {
+    width: 0;
+    display: none;
+    @media screen and (min-width: 768px) {
+      display: block;
+      width: 7px;
+      border-radius: 10px;
+    }
+  }
+}
