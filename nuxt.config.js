@@ -21,12 +21,9 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    { src: '@/plugins/confirmDialog', ssr: false },
     { src: '@/plugins/google-maps.js' },
-    '@/plugins/touchEvents',
-    { src: '@/plugins/infiniteLoading', ssr: false },
-    '@/plugins/errors',
     '@/plugins/firebase',
+    '@/plugins/axios',
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -42,13 +39,15 @@ export default {
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     'nuxt-i18n',
-    '@nuxtjs/auth-next',
+    '@nuxtjs/axios',
     '@nuxtjs/dayjs',
     'vue-toastification/nuxt',
+    '~/modules/mongodb-setup.js',
+    '@nuxtjs/auth',
   ],
 
   axios: {
-    baseURL: 'https://core.medsearch/api',
+    baseURL: 'http://localhost:4000/',
   },
 
   i18n: {
@@ -71,31 +70,23 @@ export default {
   },
 
   auth: {
-    plugins: ['~/plugins/permissions'],
-    redirect: {
-      home: '/map',
-      login: '/login?auth_error=1',
-      logout: '/login',
-    },
     strategies: {
       local: {
-        scheme: 'local',
-        token: {
-          property: 'token',
-          maxAge: 60 * 60 * 2,
-        },
-        user: {
-          property: '',
-        },
         endpoints: {
-          login: { url: '/', method: 'post', propertyName: 'token' },
-          logout: { url: '/auth/logout ', method: 'post' },
-          user: { url: '/profile', method: 'get', propertyName: false },
+          login: {
+            url: 'doctor/login',
+            method: 'post',
+            propertyName: 'data.token',
+          },
+          user: { url: 'doctor/profile', method: 'get', propertyName: 'data' },
+          logout: false,
         },
       },
     },
   },
-
+  // router: {
+  //   middleware: ['auth'],
+  // },
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
     postcss: {
@@ -112,7 +103,7 @@ export default {
   },
 
   styleResources: {
-    scss: ['@/assets/sass/variables.scss'],
+    scss: ['@/assets/sass/common.scss'],
   },
 
   loading: '~/components/Loading.vue',

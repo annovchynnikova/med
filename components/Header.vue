@@ -1,10 +1,15 @@
 <template>
   <div class="header">
-    <img class="header-logo" src="~/assets/img/logo.png" alt="" />
+    <img
+      class="header-logo"
+      src="~/assets/img/logo.png"
+      alt=""
+      @click="goToMain"
+    />
     <SearchInput />
     <div class="header-menu">
       <div class="header-menu-news">Новини</div>
-      <div class="header-menu-map">Карта</div>
+      <div class="header-menu-map">Препарати</div>
       <div class="header-menu-login">
         <div class="login-enter">
           <nuxt-link v-if="!login" to="login">Увійти</nuxt-link>
@@ -55,13 +60,16 @@ export default {
           this.user = ''
         })
     },
+    goToMain() {
+      this.$router.push('/')
+    },
   },
 }
 </script>
 
 <style lang="scss" scoped>
 .header {
-  color: #5f9ea0;
+  color: #406f70;
   font-weight: 600;
   height: 70px;
   display: flex;
@@ -71,6 +79,7 @@ export default {
     max-width: 60px;
     margin: 7px;
     margin-left: 20px;
+    cursor: pointer;
   }
   &-menu {
     display: flex;
@@ -78,9 +87,19 @@ export default {
     align-items: center;
     div {
       margin: 10px;
+      cursor: pointer;
     }
     &-login {
       display: flex;
+    }
+  }
+}
+.login {
+  &-enter,
+  &-reg {
+    a {
+      text-decoration: none;
+      color: #406f70;
     }
   }
 }
