@@ -126,6 +126,7 @@ export default {
     display: flex;
     flex-direction: column;
     color: rgb(95, 158, 160);
+    padding: 15px;
     &-label {
       font-weight: normal;
       font-size: 18px;

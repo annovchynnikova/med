@@ -7,38 +7,28 @@
     <div class="popular-med">
       <h2 class="popular-med__title">Популярні медикаменти</h2>
       <div class="popular-med__items">
-        <!-- todo зробити циклом з беку -->
-        <div class="popular-med-item">
-          <p class="popular-med-item_title">Цитрамон</p>
-          <p class="popular-med-item_text">
-            Our Doctors are available 24/7. In case of an emergency we strongly
-            suggest you call 911 or your local emergency response number.
-          </p>
-          <nuxt-link class="popular-med-item_link" to="/"
-            >Дізнатись більше</nuxt-link
-          >
-        </div>
-        <div class="popular-med-item">
-          <p class="popular-med-item_title">Ібупрофен</p>
-          <p class="popular-med-item_text">
-            Chat, Call or Video Conference. We provide you with unparalleled
-            Customer Support. Our professionals will be there to assist you and
-            our virtual assistant is able to answer your most basic questions.
-          </p>
-          <nuxt-link class="popular-med-item_link" to="/"
-            >Дізнатись більше</nuxt-link
-          >
-        </div>
-        <div class="popular-med-item">
-          <p class="popular-med-item_title">Септифріл</p>
-          <p class="popular-med-item_text">
-            Our Healthcare Professionals are virtually available at all times.
-            Please sign up and set up an appointment. Our Staff is trained at
-            the top medical Schools in the country.
-          </p>
-          <nuxt-link class="popular-med-item_link" to="/"
-            >Дізнатись більше</nuxt-link
-          >
+        <div
+          v-for="(item, index) of medicines"
+          :key="index"
+          class="popular-med-item"
+        >
+          <nuxt-link class="no-link" :to="'medicine/' + item.id">
+            <p class="popular-med-item_title">{{ item.title }}</p>
+            <p class="med-item-info">{{ item.info }}</p>
+            <p class="popular-med-item_text">
+              Симптоми:<br />
+              <span>{{ item.symptoms }}</span>
+            </p>
+            <p class="med-item-categories">
+              Категорії:<br />
+              <span>{{ item.categories }}</span>
+            </p>
+            <p class="med-item-maker">
+              Виробник:<br />
+              <span>{{ item.maker }}</span>
+            </p>
+            <p class="popular-med-item_link">Дізнатись більше</p>
+          </nuxt-link>
         </div>
       </div>
     </div>
@@ -47,7 +37,55 @@
 </template>
 
 <script>
-export default { auth: false }
+export default {
+  auth: false,
+  data() {
+    return {
+      medicines: [
+        {
+          id: '1',
+          info: 'req.body.info',
+          title: 'req.body.title',
+          symptoms: 'req.body.symptoms',
+          categories: 'req.body.categories',
+          maker: 'req.body.maker',
+        },
+        {
+          id: '2',
+          info: 'req.body.info',
+          title: 'req.body.title',
+          symptoms: 'req.body.symptoms',
+          categories: 'req.body.categories',
+          maker: 'req.body.maker',
+        },
+        {
+          id: '3',
+          info: 'req.body.info',
+          title: 'req.body.title',
+          symptoms: 'req.body.symptoms',
+          categories: 'req.body.categories',
+          maker: 'req.body.maker',
+        },
+        {
+          id: '4',
+          info: 'req.body.info',
+          title: 'req.body.title',
+          symptoms: 'req.body.symptoms',
+          categories: 'req.body.categories',
+          maker: 'req.body.maker',
+        },
+        {
+          id: '5',
+          info: 'req.body.info',
+          title: 'req.body.title',
+          symptoms: 'req.body.symptoms',
+          categories: 'req.body.categories',
+          maker: 'req.body.maker',
+        },
+      ],
+    }
+  },
+}
 </script>
 
 <style lang="scss">
@@ -75,6 +113,7 @@ export default { auth: false }
   &__items {
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
   }
   &-item {
     margin: 20px;

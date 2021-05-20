@@ -8,8 +8,10 @@
     />
     <SearchInput />
     <div class="header-menu">
-      <div class="header-menu-news">Новини</div>
-      <div class="header-menu-map">Препарати</div>
+      <div class="header-menu-items">
+        <nuxt-link class="header-menu-news" to="news">Новини</nuxt-link>
+        <nuxt-link class="header-menu-med" to="medicine">Препарати</nuxt-link>
+      </div>
       <div class="header-menu-login">
         <div class="login-enter">
           <nuxt-link v-if="!login" to="login">Увійти</nuxt-link>
@@ -88,9 +90,32 @@ export default {
     div {
       margin: 10px;
       cursor: pointer;
+
+      @media screen and (max-width: 1000px) {
+        margin: 2px 10px 2px 0;
+      }
     }
+
+    &-news,
+    &-med {
+      text-decoration: none;
+      color: #406f70;
+    }
+    &-news {
+      margin-right: 20px;
+    }
+
     &-login {
       display: flex;
+    }
+
+    &-items {
+      display: flex;
+    }
+
+    @media screen and (max-width: 1000px) {
+      flex-direction: column;
+      align-items: baseline;
     }
   }
 }

@@ -1,6 +1,6 @@
 <template>
   <div class="search-container">
-    <input class="search" type="text" />
+    <input v-model="inputText" class="search" type="text" @input="search" />
     <img
       class="search-img"
       src="~/assets/img/searchlogo.svg"
@@ -12,8 +12,14 @@
 
 <script>
 export default {
+  data() {
+    return {
+      inputText: '',
+    }
+  },
   methods: {
     search() {
+      console.log(this.inputText)
       console.log('Пошук')
     },
   },
