@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="content">
     <div class="main-content">
       <h1 class="main-content__title">Med.Search</h1>
       <img class="main-content__img" src="~/assets/img/main.svg" alt="" />
@@ -37,54 +37,11 @@
 </template>
 
 <script>
+import medicines from '@/mixins/medicines.js'
+
 export default {
   auth: false,
-  data() {
-    return {
-      medicines: [
-        {
-          id: '1',
-          info: 'req.body.info',
-          title: 'req.body.title',
-          symptoms: 'req.body.symptoms',
-          categories: 'req.body.categories',
-          maker: 'req.body.maker',
-        },
-        {
-          id: '2',
-          info: 'req.body.info',
-          title: 'req.body.title',
-          symptoms: 'req.body.symptoms',
-          categories: 'req.body.categories',
-          maker: 'req.body.maker',
-        },
-        {
-          id: '3',
-          info: 'req.body.info',
-          title: 'req.body.title',
-          symptoms: 'req.body.symptoms',
-          categories: 'req.body.categories',
-          maker: 'req.body.maker',
-        },
-        {
-          id: '4',
-          info: 'req.body.info',
-          title: 'req.body.title',
-          symptoms: 'req.body.symptoms',
-          categories: 'req.body.categories',
-          maker: 'req.body.maker',
-        },
-        {
-          id: '5',
-          info: 'req.body.info',
-          title: 'req.body.title',
-          symptoms: 'req.body.symptoms',
-          categories: 'req.body.categories',
-          maker: 'req.body.maker',
-        },
-      ],
-    }
-  },
+  mixins: [medicines],
 }
 </script>
 

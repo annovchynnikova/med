@@ -6,7 +6,11 @@
 </template>
 
 <script>
-export default {}
+export default {
+  mounted() {
+    this.$auth.fetchUser()
+  },
+}
 </script>
 
 <style>

@@ -19,59 +19,20 @@
           </p>
         </nuxt-link>
       </div>
+      <loading-bar v-if="!medicines.length"></loading-bar>
     </div>
   </div>
 </template>
 
 <script>
-// todo витягнути всі препарати з бд
+import loadingBar from '@/components/LoadingBar.vue'
+import medicines from '@/mixins/medicines.js'
+
 export default {
-  data() {
-    return {
-      medicines: [
-        {
-          id: '1',
-          info: 'req.body.info',
-          title: 'req.body.title',
-          symptoms: 'req.body.symptoms',
-          categories: 'req.body.categories',
-          maker: 'req.body.maker',
-        },
-        {
-          id: '2',
-          info: 'req.body.info',
-          title: 'req.body.title',
-          symptoms: 'req.body.symptoms',
-          categories: 'req.body.categories',
-          maker: 'req.body.maker',
-        },
-        {
-          id: '3',
-          info: 'req.body.info',
-          title: 'req.body.title',
-          symptoms: 'req.body.symptoms',
-          categories: 'req.body.categories',
-          maker: 'req.body.maker',
-        },
-        {
-          id: '4',
-          info: 'req.body.info',
-          title: 'req.body.title',
-          symptoms: 'req.body.symptoms',
-          categories: 'req.body.categories',
-          maker: 'req.body.maker',
-        },
-        {
-          id: '5',
-          info: 'req.body.info',
-          title: 'req.body.title',
-          symptoms: 'req.body.symptoms',
-          categories: 'req.body.categories',
-          maker: 'req.body.maker',
-        },
-      ],
-    }
+  components: {
+    loadingBar,
   },
+  mixins: [medicines],
 }
 </script>
 

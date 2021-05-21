@@ -3,15 +3,34 @@
     <div class="reg-container">
       <h2 class="reg-title">New Doctor Registration</h2>
       <!-- //todo validation -->
-      <div class="reg-form">
+      <form class="reg-form" @submit.prevent="pressed">
         <p class="reg-form-label">Your name</p>
         <div class="reg-form-name">
-          <input v-model="first_name" type="text" placeholder="First name" />
-          <input v-model="last_name" type="text" placeholder="Last name" />
+          <input
+            v-model="first_name"
+            required
+            type="text"
+            placeholder="First name"
+            minlength="3"
+            maxlength="10"
+          />
+          <input
+            v-model="last_name"
+            required
+            minlength="3"
+            type="text"
+            placeholder="Last name"
+          />
         </div>
         <p class="reg-form-label">Phone number</p>
         <!-- //phone mask -->
-        <input v-model="phone" type="number" placeholder="Number" />
+        <input
+          v-model="phone"
+          minlength="10"
+          type="number"
+          required
+          placeholder="Number"
+        />
         <p class="reg-form-text">
           By Providing us your mobile number, you give us permission to contact
           you via text.
@@ -19,30 +38,32 @@
         <p class="reg-form-label">E-mail Address</p>
         <input
           v-model="email"
-          type="e-mail"
+          type="email"
+          minlength="8"
+          required
           placeholder="Enter your e-mail address"
-          autocomplete="off"
+          autocomplete="on"
         />
         <p class="reg-form-label">Choose password</p>
         <input
           v-model="password"
           type="password"
-          placeholder="password"
+          required
+          minlength="6"
+          placeholder="Password"
           autocomplete="off"
         />
         <div class="reg-agree reg-form-text">
-          <input id="agree" type="checkbox" name="" />
+          <input id="agree" required type="checkbox" name="" />
           <label for="agree">
             I Agree to Terms of Use, Informed Consent and Privacy Policy.</label
           >
         </div>
         <p v-if="error">{{ error }}</p>
         <div class="reg-submit">
-          <button class="reg-button app-button" @click="pressed">
-            REGISTER
-          </button>
+          <button type="submit" class="reg-button app-button">REGISTER</button>
         </div>
-      </div>
+      </form>
     </div>
     <div v-if="$auth.loggedIn">
       {{ $auth.user.email }}
@@ -55,35 +76,6 @@
 </template>
 
 <script>
-// export default {
-//   auth: false,
-//   data() {
-//     return {
-//       email: '',
-//       password: '',
-//       phone: '',
-//       first_name: '',
-//       last_name: '',
-//       error: '',
-//       middleware: 'auth',
-//     }
-//   },
-//   methods: {
-//     pressed() {
-//       firebase
-//         .auth()
-//         .createUserWithEmailAndPassword(this.email, this.password)
-//         .then((user) => {
-//           console.log(user)
-//           this.$router.push('/profile')
-//         })
-//         .catch((error) => {
-//           this.error = error.response.data.error.message
-//         })
-//         .finally(() => {})
-//     },
-//   },
-// }
 export default {
   auth: false,
   data() {
@@ -110,13 +102,13 @@ export default {
       this.$store
         .dispatch('doctor/addNew', this.data)
         .then((res) => {
-          console.log('1111')
-          this.email = ''
-          this.password = ''
-          this.phone = ''
-          this.first_name = ''
-          this.last_name = ''
-          this.error = ''
+          this.$auth.loginWith('local', {
+            data: { email: res.data.email, password: res.data.password },
+          })
+          this.$auth.fetchUser()
+          setTimeout(() => {
+            this.$router.push('/profile')
+          }, 300)
         })
         .catch((error) => {
           this.error = error.response.data.error.message

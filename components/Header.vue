@@ -9,17 +9,16 @@
     <SearchInput />
     <div class="header-menu">
       <div class="header-menu-items">
-        <nuxt-link class="header-menu-news" to="news">Новини</nuxt-link>
-        <nuxt-link class="header-menu-med" to="medicine">Препарати</nuxt-link>
-      </div>
-      <div class="header-menu-login">
-        <div class="login-enter">
-          <nuxt-link v-if="!login" to="login">Увійти</nuxt-link>
-          <nuxt-link v-else to="profile">Профіль</nuxt-link>
-        </div>
-        <div class="login-reg">
-          <nuxt-link v-if="!login" to="registration">Зареєструватись</nuxt-link>
-          <p v-else @click="singOut">Вийти</p>
+        <nuxt-link class="header-menu-item" to="news">Новини</nuxt-link>
+        <nuxt-link class="header-menu-item" to="medicine">Препарати</nuxt-link>
+        <nuxt-link v-if="$auth.user" class="header-menu-item" to="profile"
+          >Профіль</nuxt-link
+        >
+        <div v-else>
+          <nuxt-link class="header-menu-item" to="login">Увійти</nuxt-link>
+          <nuxt-link class="header-menu-item" to="registration"
+            >Зареєструватись</nuxt-link
+          >
         </div>
       </div>
     </div>
@@ -28,8 +27,6 @@
 
 <script>
 import SearchInput from '@/components/SearchInput'
-import firebase from 'firebase/app'
-require('firebase/auth')
 
 export default {
   components: {
@@ -37,33 +34,22 @@ export default {
   },
   data() {
     return {
-      login: false,
+      login: this.$auth.user,
       user: '',
     }
   },
   mounted() {
     // todo перевірити чи авторизований користувач і змінити login
     // todo зробити все в asyncData
-    firebase.auth().onAuthStateChanged((user) => {
-      this.user = user
-      if (user) {
-        this.login = true
-      }
-    })
+    this.$auth.fetchUser()
   },
   methods: {
-    singOut() {
-      firebase
-        .auth()
-        .signOut()
-        .then((result) => {
-          console.log(result)
-          this.login = false
-          this.user = ''
-        })
-    },
     goToMain() {
       this.$router.push('/')
+    },
+    singOut() {
+      this.$auth.logout()
+      this.$auth.fetchUser()
     },
   },
 }
@@ -95,36 +81,23 @@ export default {
         margin: 2px 10px 2px 0;
       }
     }
-
-    &-news,
-    &-med {
-      text-decoration: none;
-      color: #406f70;
-    }
     &-news {
       margin-right: 20px;
     }
 
-    &-login {
-      display: flex;
-    }
-
+    &-login,
     &-items {
       display: flex;
     }
 
-    @media screen and (max-width: 1000px) {
-      flex-direction: column;
-      align-items: baseline;
-    }
-  }
-}
-.login {
-  &-enter,
-  &-reg {
-    a {
+    &-item {
       text-decoration: none;
       color: #406f70;
+      margin-right: 25px;
+      &:hover {
+        transform: scale(1.1);
+        color: cadetblue;
+      }
     }
   }
 }

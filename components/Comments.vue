@@ -1,18 +1,21 @@
 <template>
-  <div class="container">
+  <div v-if="$auth.user" class="container">
     <h4 class="medicine-comments-title">Залишити коментар</h4>
 
     <div class="comment-container">
       <!-- <input v-model="id_medicine" type="text" /> -->
-      <input
-        v-model="doctor_name"
-        placeholder="Ваше прізвище та ім'я"
-        type="text"
-      />
-      <textarea v-model="comments_name" placeholder="Коментар" type="text" />
-      <p v-if="errorText" class="error-text">{{ errorText }}</p>
-      <button class="app-button" @click="sendComment">Прокоментувати</button>
-      <p v-if="successText" class="success-text">{{ successText }}</p>
+      <form @submit.prevent="sendComment">
+        <input
+          v-model="doctor_name"
+          required
+          placeholder="Ваше прізвище та ім'я"
+          type="text"
+        />
+        <textarea v-model="comments_name" placeholder="Коментар" type="text" />
+        <p v-if="errorText" class="error-text">{{ errorText }}</p>
+        <button class="app-button">Прокоментувати</button>
+        <p v-if="successText" class="success-text">{{ successText }}</p>
+      </form>
     </div>
   </div>
 </template>

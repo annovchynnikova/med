@@ -67,7 +67,6 @@ export default {
     }
   },
   mounted() {
-    console.log(this.commentsId)
     // to do запит по id
   },
 }
@@ -156,5 +155,8 @@ export default {
     font-size: 13px;
     color: rgba(12, 44, 15, 0.664);
   }
+}
+.comments {
+  margin-bottom: 50px;
 }
 </style>

@@ -72,16 +72,25 @@ export default {
   auth: {
     strategies: {
       local: {
+        scheme: 'local',
+        token: {
+          property: 'token',
+          maxAge: 60 * 60 * 2,
+        },
+        user: {
+          property: '',
+        },
         endpoints: {
-          login: {
-            url: 'doctor/login',
-            method: 'post',
-            propertyName: 'data.token',
-          },
-          user: { url: 'doctor/profile', method: 'get', propertyName: 'data' },
-          logout: false,
+          login: { url: '/auth/login', method: 'post', propertyName: 'token' },
+          logout: { url: '/auth/logout', method: 'post' },
+          user: { url: '/auth/profile', method: 'get', propertyName: false },
         },
       },
+    },
+    redirect: {
+      home: '/profile',
+      login: '/login?auth_error=1',
+      logout: '/login',
     },
   },
   // router: {

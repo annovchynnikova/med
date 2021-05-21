@@ -19,7 +19,6 @@ export default {
   },
   methods: {
     search() {
-      console.log(this.inputText)
       console.log('Пошук')
     },
   },

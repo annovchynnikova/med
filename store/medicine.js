@@ -1,4 +1,17 @@
+export const state = {
+  medicines: [],
+}
+
+export const mutations = {
+  setAllMedicines(state, medicines) {
+    state.medicines = medicines
+  },
+}
+
 export const actions = {
+  async initAllMedicines({ dispatch, commit }) {
+    commit('setAllMedicines', await dispatch('getAll'))
+  },
   async addNew(context, params) {
     return await this.$axios.$post('medicine', params)
   },

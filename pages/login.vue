@@ -1,29 +1,39 @@
 <template>
   <div>
     <div class="login-container">
-      <h2 class="login-title">Doctor Enter</h2>
+      <h2 class="login-title">Вхід лікаря</h2>
       <!-- //todo validation + css -->
       <form @submit.prevent="userLogin">
         <div class="login-form">
-          <p class="login-form-label">Phone number</p>
+          <p class="login-form-label">Номер телефону</p>
           <!-- //phone mask -->
-          <input v-model="login.phone" type="number" placeholder="Number" />
-          <p class="login-form-label">E-mail Address</p>
+          <input
+            v-model="login.phone"
+            type="number"
+            required
+            minlength="10"
+            placeholder="Номер телефону"
+          />
+          <p class="login-form-label">Електронна пошта</p>
           <input
             v-model="login.email"
             type="e-mail"
-            placeholder="Enter your e-mail address"
+            required
+            minlength="8"
+            placeholder="Електронна пошта"
             autocomplete="off"
           />
-          <p class="login-form-label">Password</p>
+          <p class="login-form-label">Пароль</p>
           <input
             v-model="login.password"
             type="password"
-            placeholder="password"
+            required
+            minlength="6"
+            placeholder="Пароль"
             autocomplete="off"
           />
           <div class="login-submit">
-            <button type="submit" class="login-button">ENTER</button>
+            <button type="submit" class="login-button">Увійти</button>
           </div>
         </div>
       </form>
@@ -32,8 +42,6 @@
 </template>
 
 <script>
-// import firebase from 'firebase/app'
-// import 'firebase/auth'
 export default {
   data() {
     return {
@@ -45,48 +53,13 @@ export default {
     }
   },
   methods: {
-    pressed(logininfo) {
+    userLogin() {
       this.data = {
-        email: this.email,
-        password: this.password,
+        email: this.login.email,
+        password: this.login.password,
       }
-      console.log(logininfo)
-      // firebase
-      //   .auth()
-      //   .singInWithEmailAndPassword(this.email, this.password)
-      //   .then((user) => {
-      //     console.log(user)
-      //     this.$router.push('/profile')
-      //   })
-      //   .catch((error) => {
-      //     this.error = error
-      //   })
-      alert(logininfo)
-    },
-    async userLogin() {
-      console.log(this.login.email)
-      this.$store
-        .dispatch('doctor/getOne', this.login.email)
-        .then((res) => {
-          // this.email = ''
-          // this.password = ''
-          // this.phone = ''
-          // this.error = ''
-          console.log(res)
-        })
-        .catch((error) => {
-          this.error = error.response.data.error.message
-        })
-        .finally(() => {})
-
-      await this.$auth.loginWith('local', {
-        data: {
-          email: this.login.email,
-          password: this.login.password,
-        },
-      })
-      this.$nextTick(() => {
-        console.log(this.$auth.user)
+      this.$auth.loginWith('local', {
+        data: this.data,
       })
     },
   },
