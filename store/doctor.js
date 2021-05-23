@@ -11,4 +11,7 @@ export const actions = {
   async deleteOne(context, id) {
     return await this.$axios.$delete(`doctor/${id}`)
   },
+  async addLiked(context, params) {
+    return await this.$axios.$post('doctor/addLiked', params)
+  },
 }

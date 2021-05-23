@@ -1,38 +1,18 @@
 <template>
   <div class="container">
-    <div class="med-items">
-      <div v-for="(item, index) of medicines" :key="index" class="med-item">
-        <nuxt-link class="no-link" :to="'medicine/' + item.id">
-          <p class="med-item-title">{{ item.title }}</p>
-          <p class="med-item-info">{{ item.info }}</p>
-          <p class="med-item-symptoms">
-            Симптоми:<br />
-            <span>{{ item.symptoms }}</span>
-          </p>
-          <p class="med-item-categories">
-            Категорії:<br />
-            <span>{{ item.categories }}</span>
-          </p>
-          <p class="med-item-maker">
-            Виробник:<br />
-            <span>{{ item.maker }}</span>
-          </p>
-        </nuxt-link>
-      </div>
-      <loading-bar v-if="!medicines.length"></loading-bar>
+    <div class="popular-med__items">
+      <Medicine />
     </div>
   </div>
 </template>
 
 <script>
-import loadingBar from '@/components/LoadingBar.vue'
-import medicines from '@/mixins/medicines.js'
+import Medicine from '@/components/Medicine.vue'
 
 export default {
   components: {
-    loadingBar,
+    Medicine,
   },
-  mixins: [medicines],
 }
 </script>
 
@@ -42,11 +22,7 @@ export default {
   margin: auto;
   margin-top: 50px;
 }
-.med-items {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-}
+
 .med-item {
   margin: 10px;
   border: 1px solid rgb(92, 138, 98);

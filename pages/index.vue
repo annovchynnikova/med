@@ -6,42 +6,18 @@
     </div>
     <div class="popular-med">
       <h2 class="popular-med__title">Популярні медикаменти</h2>
-      <div class="popular-med__items">
-        <div
-          v-for="(item, index) of medicines"
-          :key="index"
-          class="popular-med-item"
-        >
-          <nuxt-link class="no-link" :to="'medicine/' + item.id">
-            <p class="popular-med-item_title">{{ item.title }}</p>
-            <p class="med-item-info">{{ item.info }}</p>
-            <p class="popular-med-item_text">
-              Симптоми:<br />
-              <span>{{ item.symptoms }}</span>
-            </p>
-            <p class="med-item-categories">
-              Категорії:<br />
-              <span>{{ item.categories }}</span>
-            </p>
-            <p class="med-item-maker">
-              Виробник:<br />
-              <span>{{ item.maker }}</span>
-            </p>
-            <p class="popular-med-item_link">Дізнатись більше</p>
-          </nuxt-link>
-        </div>
-      </div>
+      <Medicine />
     </div>
     <div class="health-content"></div>
   </div>
 </template>
 
 <script>
-import medicines from '@/mixins/medicines.js'
+import Medicine from '@/components/Medicine.vue'
 
 export default {
+  components: { Medicine },
   auth: false,
-  mixins: [medicines],
 }
 </script>
 
@@ -59,32 +35,6 @@ export default {
 
   &__img {
     max-width: 450px;
-  }
-}
-.popular-med {
-  margin: 50px;
-  color: #485c57;
-  &__title {
-    text-align: center;
-  }
-  &__items {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-  }
-  &-item {
-    margin: 20px;
-    background: rgba(160, 221, 185, 0.28);
-    padding: 20px;
-    p {
-      margin-bottom: 15px;
-    }
-    &_title {
-      font-size: 20px;
-      line-height: 35px;
-      text-transform: uppercase;
-      color: #406f70;
-    }
   }
 }
 </style>

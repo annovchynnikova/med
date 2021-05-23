@@ -29,6 +29,7 @@
 
       Тут будуть пацієнти + форма додавання пацієнта
     </div>
+    <Medicine :ids="likedIds" />
     <div class="div-logout">
       <button class="button-logout" @click="$auth.logout()">Вийти</button>
     </div>
@@ -36,7 +37,12 @@
 </template>
 
 <script>
+import Medicine from '@/components/Medicine.vue'
+
 export default {
+  components: {
+    Medicine,
+  },
   async asyncData({ params, store, redirect, app: { localePath, $auth } }) {
     try {
       const data = await store.dispatch('doctor/getOne', $auth.user.email)
@@ -51,6 +57,16 @@ export default {
     return {
       user: this.$auth.user,
     }
+  },
+  computed: {
+    likedIds() {
+      return this.doctor.liked
+    },
+    likedMedicines() {
+      return this.$store.state.medicine.medicines.filter((item) => {
+        return this.likedIds.includes(item.id)
+      })
+    },
   },
   mounted() {},
 }
