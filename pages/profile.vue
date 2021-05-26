@@ -26,10 +26,40 @@
 
     <div class="patient">
       <h2 class="reg-title">Процес лікування</h2>
-
-      Тут будуть пацієнти + форма додавання пацієнта
+      <div v-if="docPatients">
+        <div
+          v-for="(item, index) of docPatients"
+          :key="index"
+          class="doctor-patient"
+        >
+          <p class="patient-name">{{ item.name }}</p>
+          <p>{{ item.syptoms }}</p>
+          <p>{{ item.medicine }}</p>
+        </div>
+      </div>
+      <div>
+        <button
+          v-if="buttonForm"
+          class="app-button add-patient"
+          @click="formPatient"
+        >
+          Додати пацієнта
+        </button>
+      </div>
+      <div v-if="isFormPatient" class="form-patient">
+        <input v-model="patient.name" type="text" placeholder="Ім`я" />
+        <input v-model="patient.syptoms" type="text" placeholder="Симптоми" />
+        <input
+          v-model="patient.medicine"
+          type="text"
+          placeholder="Медикаменти"
+        />
+        <button class="app-button add-patient" @click="addPatient">
+          Додати пацієнта
+        </button>
+      </div>
     </div>
-    <Medicine :ids="likedIds" />
+    <Medicine v-if="likedIds.length" :ids="likedIds" />
     <div class="div-logout">
       <button class="button-logout" @click="$auth.logout()">Вийти</button>
     </div>
@@ -47,7 +77,6 @@ export default {
     try {
       const data = await store.dispatch('doctor/getOne', $auth.user.email)
       const doctor = data[0]
-
       return { doctor }
     } catch (error) {
       redirect(localePath('/'))
@@ -56,11 +85,20 @@ export default {
   data() {
     return {
       user: this.$auth.user,
+      isFormPatient: false,
+      patient: {
+        name: '',
+        syptoms: '',
+        medicine: '',
+      },
+      patientDoc: '',
+      docPatients: '',
+      buttonForm: true,
     }
   },
   computed: {
     likedIds() {
-      return this.doctor.liked
+      return this.$store.state.doctor.liked
     },
     likedMedicines() {
       return this.$store.state.medicine.medicines.filter((item) => {
@@ -68,7 +106,48 @@ export default {
       })
     },
   },
-  mounted() {},
+  mounted() {
+    this.getPatient()
+    // console.log(this.doctor.id)
+  },
+  methods: {
+    addPatient() {
+      this.data = {
+        id: this.doctor._id,
+        name: this.patient.name,
+        syptoms: this.patient.syptoms,
+        medicine: this.patient.medicine,
+      }
+      this.$store
+        .dispatch('patient/addPatient', this.data)
+        .then((res) => {
+          console.log(res.data)
+          this.getPatient()
+        })
+        .catch((error) => {
+          this.errorText = error.response.data.error.message
+        })
+        .finally(() => {})
+    },
+    getPatient() {
+      if (this.doctor) {
+        this.$store
+          .dispatch('patient/getById', this.doctor._id)
+          .then((res) => {
+            this.docPatients = res
+            console.log(res)
+          })
+          .catch((error) => {
+            this.errorText = error.response.data.error.message
+          })
+          .finally(() => {})
+      }
+    },
+    formPatient() {
+      this.isFormPatient = true
+      this.buttonForm = false
+    },
+  },
 }
 </script>
 
@@ -118,6 +197,25 @@ export default {
   max-width: 300px;
 }
 
-.pacient {
+.doctor-patient {
+  margin: 20px 0;
+  background-color: rgba(57, 97, 77, 0.521);
+  border-radius: 20px;
+  padding: 10px;
+}
+.patient-name {
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+.add-patient {
+  width: 150px;
+  font-size: 14px;
+  height: 20px;
+}
+.form-patient {
+  margin-top: 30px;
+  button {
+    margin-top: 20px;
+  }
 }
 </style>

@@ -3,7 +3,9 @@
     <div class="login-container">
       <h2 class="login-title">Вхід лікаря</h2>
       <!-- //todo validation + css -->
+
       <form @submit.prevent="userLogin">
+        <p v-if="error" class="error">Невірні дані</p>
         <div class="login-form">
           <p class="login-form-label">Номер телефону</p>
           <!-- //phone mask -->
@@ -13,6 +15,7 @@
             required
             minlength="10"
             placeholder="Номер телефону"
+            @input="error = false"
           />
           <p class="login-form-label">Електронна пошта</p>
           <input
@@ -22,6 +25,7 @@
             minlength="8"
             placeholder="Електронна пошта"
             autocomplete="off"
+            @input="error = false"
           />
           <p class="login-form-label">Пароль</p>
           <input
@@ -31,6 +35,7 @@
             minlength="6"
             placeholder="Пароль"
             autocomplete="off"
+            @input="error = false"
           />
           <div class="login-submit">
             <button type="submit" class="login-button">Увійти</button>
@@ -50,6 +55,7 @@ export default {
         password: '',
         phone: '',
       },
+      error: '',
     }
   },
   methods: {
@@ -58,9 +64,13 @@ export default {
         email: this.login.email,
         password: this.login.password,
       }
-      this.$auth.loginWith('local', {
-        data: this.data,
-      })
+      this.$auth
+        .loginWith('local', {
+          data: this.data,
+        })
+        .catch((reject) => {
+          this.error = true
+        })
     },
   },
 }
@@ -138,5 +148,16 @@ export default {
       margin-right: 0;
     }
   }
+}
+.error {
+  text-align: right;
+  color: rgb(248, 113, 113);
+  margin-right: 10px;
+  position: absolute;
+  top: 15px;
+  right: 15px;
+}
+form {
+  position: relative;
 }
 </style>

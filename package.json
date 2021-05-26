@@ -33,6 +33,7 @@
     "nuxt": "^2.15.3",
     "nuxt-i18n": "^6.27.0",
     "sass-loader": "10.1.1",
+    "vue-click-outside": "^1.1.0",
     "vue-confirm-dialog": "^1.0.2",
     "vue-infinite-loading": "^2.4.5",
     "vue-loader": "^15.9.6",

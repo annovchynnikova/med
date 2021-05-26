@@ -57,7 +57,10 @@ export default {
         .catch((error) => {
           this.errorText = error.response.data.error.message
         })
-        .finally(() => {})
+        .finally(() => {
+          this.doctor_name = ''
+          this.comments_name = ''
+        })
     },
   },
 }
@@ -86,6 +89,10 @@ export default {
     margin-top: 10px;
     font-size: 12px;
     color: rgb(25, 100, 31);
+  }
+  form {
+    display: flex;
+    flex-direction: column;
   }
 }
 .medicine-comments-title {

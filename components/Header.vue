@@ -88,6 +88,7 @@ export default {
     &-login,
     &-items {
       display: flex;
+      align-items: center;
     }
 
     &-item {

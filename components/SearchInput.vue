@@ -46,8 +46,8 @@ export default {
       const medicines = this.$store.state.medicine.medicines
       const result = medicines.filter((item) => {
         return (
-          item.title.includes(this.searchValue) ||
-          item.symptoms.includes(this.searchValue)
+          item.title.toLowerCase().includes(this.searchValue.toLowerCase()) ||
+          item.symptoms.toLowerCase().includes(this.searchValue.toLowerCase())
         )
       })
 
@@ -60,6 +60,9 @@ export default {
   methods: {
     search() {
       if (this.searchValue) console.log('Пошук')
+    },
+    clearSearch() {
+      this.searchValue = ''
     },
   },
 }
@@ -90,11 +93,12 @@ export default {
     border: 1px solid #000000;
     border-radius: 6px;
     padding: 10px;
+    z-index: 5;
 
     &::before {
       content: '';
       position: absolute;
-      top: -5px;
+      top: -6px;
       left: 20px;
       width: 10px;
       height: 10px;
@@ -109,7 +113,7 @@ export default {
       border-color: red;
       color: red;
 
-      ::before {
+      &::before {
         border-color: red;
         background: #f5e0e0;
       }
@@ -133,8 +137,12 @@ export default {
   }
 }
 .medicine-info {
+  color: #4d4949;
+  font-weight: normal;
+
   &__title {
     color: black;
+    font-weight: bold;
   }
 }
 </style>

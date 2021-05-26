@@ -24,7 +24,9 @@
           <p class="popular-med-item_link">Дізнатись більше</p>
         </nuxt-link>
         <div
-          :class="['med-like', isLiked ? 'med-liked' : '']"
+          v-if="isNotGuest"
+          class="med-like"
+          :class="{ 'med-liked': likedMeds.includes(item.id) }"
           @click="liked(item.id)"
         ></div>
       </div>
@@ -66,7 +68,7 @@ export default {
         liked_id: id,
         email: this.$auth.user.email,
       }
-      this.$store.dispatch('doctor/addLiked', data)
+      this.$store.dispatch(`doctor/toggleLiked`, data)
     },
   },
 }
@@ -75,7 +77,22 @@ export default {
 <style lang="scss" scoped>
 .med-like {
   width: 20px;
-  height: 20px;
-  background-image: url('~assets/img/heart_grade.svg');
+  height: 18px;
+  background-image: url('~assets/img/heart_mono.svg');
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+  cursor: pointer;
+
+  &.med-liked {
+    background-image: url('~assets/img/heart_grade.svg');
+  }
+}
+
+.med-item-info {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100%;
 }
 </style>

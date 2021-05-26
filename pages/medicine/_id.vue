@@ -93,6 +93,17 @@ export default {
     display: flex;
     justify-content: space-between;
     margin-top: 20px;
+    flex-direction: column;
+    gap: 20px;
+
+    p {
+      font-size: 16px;
+      font-weight: 500;
+      span {
+        font-size: 14px;
+        font-weight: normal;
+      }
+    }
   }
 
   p {
@@ -103,11 +114,14 @@ export default {
     text-align: center;
     color: rgb(49, 71, 52);
     font-weight: 600;
+    font-size: 24px;
   }
 
   &-info {
     padding-bottom: 10px;
     border-bottom: 5px dotted rgba(155, 154, 154, 0.479);
+    margin: 15px 0;
+    text-align: justify;
   }
 
   &-symptoms,
@@ -133,7 +147,10 @@ export default {
 
 .comment-item {
   margin-top: 20px;
-  border-bottom: 5px dotted rgba(94, 134, 99, 0.192);
+  border: 3px solid rgba(94, 134, 99, 0.192);
+  border-radius: 10px;
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.05);
 
   &-text {
     margin-top: 15px;
@@ -141,6 +158,7 @@ export default {
   }
   &-ttle {
     display: flex;
+    align-items: center;
   }
   &-name-text {
     margin-right: 10px;
